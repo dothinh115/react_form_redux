@@ -43,7 +43,6 @@ class Main extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    formConfig: state.formConfig,
     data: state.data
 });
 

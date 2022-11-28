@@ -10,6 +10,11 @@ export class Search extends Component {
             payload: value
         }
         this.props.dispatch(action);
+        const action_2 = {
+            type: "SV_DANG_SUA",
+            payload: {}
+        }
+        this.props.dispatch(action_2);
     }
     render() {
         return (

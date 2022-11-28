@@ -3,15 +3,12 @@ import { connect } from 'react-redux'
 import Item from './Item'
 
 export class List extends Component {
-    // componentDidUpdate(prevProps, prevState) {
-    //     if(this.props.search) {
-    //         this.searchResult();
-    //     }
-    // }
-
     searchResult = () => {
         const {data, search} = this.props;
-        let searchRes = data.filter(item => item.hoten.toLowerCase().indexOf(search) !== -1);
+        let searchRes = [];
+        if(search !== "") {
+            searchRes = data.filter(item => item.hoten.toLowerCase().indexOf(search) !== -1);
+        }
         return searchRes;
     }
 
@@ -19,17 +16,24 @@ export class List extends Component {
         if(index === 0 || index === 2) {
             return "10%";
         }
-        return "20%";
+        return "23%";
     }
 
     showItems = () => {
-        const {data} = this.props;
-        let mainData = data;
-        if(this.searchResult().length === 0) {
-            return <tr><td colSpan={4}>Không có kết quả trùng khớp</td></tr>;
+        const {data, search} = this.props;
+        let searchRes = [];
+        let mainData = [];
+        if(search !== "") {
+            searchRes = data.filter(item => item.hoten.toLowerCase().indexOf(search) !== -1);
+            if(searchRes.length === 0) {
+                return <tr><td colSpan={5}>Không tìm thấy kết quả nào.</td></tr>;
+            }
+            else {
+                mainData = searchRes;
+            }
         }
         else {
-            mainData = this.searchResult();
+            mainData = data;
         }
         return (mainData.map((item, index) => {
             return <Item key={index} item={item} />

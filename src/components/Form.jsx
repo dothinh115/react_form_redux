@@ -91,7 +91,7 @@ export class Form extends Component {
     }
 
     render() {
-        let {formConfig, data} = this.props;
+        let {formConfig} = this.props;
         return (
         <div>
             <h1>
@@ -122,8 +122,7 @@ export class Form extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    formConfig: state.formConfig,
-    data: state.data
+    formConfig: state.formConfig
 });
 
 

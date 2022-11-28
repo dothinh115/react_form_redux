@@ -31,12 +31,22 @@ export const mainData = (state = defaultData, action) => {
             state = state.filter(item => item.masv !== action.payload);
             return state;
         }
-        default: return  state;
+        case "SUA_SV": {
+            const updateID = action.payload.masv;
+            const find = state.findIndex(item => item.masv === updateID);
+            state[find] = action.payload;
+            return [...state];
+        }
+        default: return state;
     }
 }
 
 export const updateUser = (state = updateUserDefault, action) => {
     switch(action.type) {
+        case "SV_DANG_SUA": {
+            state = action.payload;
+            return {...state}
+        }
         default: return state;
     }
 }
