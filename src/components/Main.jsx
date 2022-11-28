@@ -22,11 +22,13 @@ class Main extends Component {
 
     getLocalStorage = () => {
         let data = localStorage.getItem("dataSV");
-        const action = {
-            type: "LOAD_DATA",
-            payload: JSON.parse(data)
+        if(data) {
+            const action = {
+                type: "LOAD_DATA",
+                payload: JSON.parse(data)
+            }
+            this.props.dispatch(action);
         }
-        this.props.dispatch(action);
     }
 
     render() {

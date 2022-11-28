@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import Item from './Item'
 
 export class List extends Component {
-    componentDidUpdate(prevProps, prevState) {
-        if(this.props.search) {
-            this.searchResult();
-        }
-    }
+    // componentDidUpdate(prevProps, prevState) {
+    //     if(this.props.search) {
+    //         this.searchResult();
+    //     }
+    // }
 
     searchResult = () => {
         const {data, search} = this.props;
@@ -22,12 +22,22 @@ export class List extends Component {
         return "20%";
     }
 
-    render() {
-        const {formConfig, data} = this.props;
+    showItems = () => {
+        const {data} = this.props;
         let mainData = data;
-        if(this.searchResult().length !== 0) {
+        if(this.searchResult().length === 0) {
+            return <tr><td colSpan={4}>Không có kết quả trùng khớp</td></tr>;
+        }
+        else {
             mainData = this.searchResult();
         }
+        return (mainData.map((item, index) => {
+            return <Item key={index} item={item} />
+        }));
+    }
+
+    render() {
+        const {formConfig} = this.props;
         return (
         <div className="mt-5">
             <h1>
@@ -50,9 +60,7 @@ export class List extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {mainData.map((item, index) => {
-                        return <Item key={index} item={item} />
-                    })}
+                    {this.showItems()}
                 </tbody>
             </table>
         </div>
