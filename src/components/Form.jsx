@@ -69,11 +69,10 @@ export class Form extends Component {
     checkValid = () => {
         let {value, errors} = this.state;
         for (let key in value) {
-            if(value[key] === "" || errors[key] !== ""){
-                if(value["masv"] === "") {
-                    return true;
+            if(key !== "masv"){
+                if(value[key] === "" || errors[key] !== ""){
+                    return false; 
                 }
-                return false; 
             }
         }
         return true; //true === pass
@@ -112,7 +111,7 @@ export class Form extends Component {
                             </div>
                     })}
                 </div>
-                <button type="submit" className="btn btn-primary my-2">
+                <button type="submit" className="btn btn-primary my-2" disabled={!this.checkValid()}>
                     Thêm
                 </button>
             </form>

@@ -156,9 +156,16 @@ constructor(props) {
             className={`form-control ${this.state.errors[id] ? "is-invalid" : undefined}`} 
             defaultValue={value} 
             data-id={id}
-            onChange={this.keychangeHandle} />
+            onChange={this.keychangeHandle}
+            onKeyUp={this.enterHandle} />
         }
         return value;
+    }
+
+    enterHandle = e => {
+        if(e.key === "Enter") {
+            this.okHandle();
+        }
     }
 
     render() {
