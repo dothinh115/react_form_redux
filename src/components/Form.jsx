@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
+
 
 export class Form extends Component {
     constructor(props) {
@@ -89,12 +91,51 @@ export class Form extends Component {
         }
     }
 
+     //lấy id tự động
+     randomId = maxNumber => {
+        let getRandomId = number => {
+            let randomId = Math.floor(Math.random() * number);
+            return randomId;
+        }
+        //lấy số random
+        let id = getRandomId(maxNumber);
+        while (id.length < 11) {
+            id = getRandomId(maxNumber);
+        }
+        return id;
+    }
+
+    randomInfo = e => {
+        let fetch = axios({
+            url: "https://randomuser.me/api/",
+            method: "GET",
+            dataType: "JSON"
+        });
+        fetch.then(res => {
+            let {results} = res.data;
+            results = results[0];
+            this.setState({
+                value: {
+                    hoten: results.name.first + " " + results.name.last,
+                    sdt: this.randomId(9999999999),
+                    email: results.email
+                },
+                valid: true
+            });
+        });
+        fetch.catch(error => {
+            console.log(error);
+        })
+    }
+
     render() {
         let {formConfig} = this.props;
         return (
         <div>
             <h1>
-                Thêm sinh viên mới
+                Thêm sinh viên mới <button className="btn btn-info mx-2" onClick={this.randomInfo}>
+                            Random info
+                        </button>
             </h1>
             <form onSubmit={this.submitHandle}>
                 <div className="row">
@@ -103,6 +144,7 @@ export class Form extends Component {
                                 <label htmlFor="form-id">{formConfig.title[index]}:</label>
                                 <input
                                 disabled={index === 0 ? true : false} 
+                                defaultValue={this.state.value[item]}
                                 placeholder={index === 0 ? "Được lấy tự động" : undefined}
                                 data-id={item} 
                                 className={`form-control ${this.state.errors[item] ? "is-invalid" : undefined}`}

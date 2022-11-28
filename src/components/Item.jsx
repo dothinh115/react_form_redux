@@ -111,17 +111,19 @@ constructor(props) {
     }
 
     okHandle = () => {
-        const data = {...this.state.value};
-        const action_2 = {
-            type: "SV_DANG_SUA",
-            payload: {}
+        if(this.checkValid()) {
+            const data = {...this.state.value};
+            const action_2 = {
+                type: "SV_DANG_SUA",
+                payload: {}
+            }
+            this.props.dispatch(action_2);
+            const action = {
+                type: "SUA_SV",
+                payload: data
+            };
+            this.props.dispatch(action);
         }
-        this.props.dispatch(action_2);
-        const action = {
-            type: "SUA_SV",
-            payload: data
-        };
-        this.props.dispatch(action);
     }
 
     showButton = () => {
