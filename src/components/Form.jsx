@@ -71,10 +71,11 @@ export class Form extends Component {
     checkValid = () => {
         let {value, errors} = this.state;
         for (let key in value) {
-            if(key !== "masv"){
-                if(value[key] === "" || errors[key] !== ""){
-                    return false; 
-                }
+            if(key === "masv"){
+                continue;
+            }
+            if(value[key] === "" || errors[key] !== ""){
+                return false; 
             }
         }
         return true; //true === pass
