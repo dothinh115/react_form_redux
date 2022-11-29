@@ -134,7 +134,7 @@ constructor(props) {
             }}>
                 Hủy
             </button>
-            <button className="btn btn-primary mx-2" onClick={this.confirmHandle} disabled={!this.checkValid()}>
+            <button className="btn btn-primary mx-2" onClick={this.confirmHandle} disabled={this.checkValid() && this.anyChange() ? false : true}>
                 OK
             </button></>
         }
@@ -166,6 +166,20 @@ constructor(props) {
         if(e.key === "Enter") {
             this.confirmHandle();
         }
+        else if(e.key === "Esc") {
+            this.cancelHandle();
+        }
+    }
+
+    anyChange = () => {
+        const {item} = this.props;
+        const {value} = this.state;
+        for (let key in item) {
+            if(item[key] !== value[key]) {
+                return true; //true === co thay doi
+            }
+        }
+        return false;
     }
 
     render() {

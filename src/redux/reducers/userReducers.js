@@ -33,11 +33,9 @@ export const mainData = (state = [], action) => {
             const find = state.findIndex(item => item.masv === updateID);
             const nextState = [...state];
             for (let key in action.payload) {
-                if(action.payload[key] !== nextState[find][key]) {
-                    nextState[find] = {
-                        ...nextState[find],
-                        [key]: action.payload[key]
-                    }
+                nextState[find] = {
+                    ...nextState[find],
+                    [key]: action.payload[key]
                 }
             }
             return nextState;
