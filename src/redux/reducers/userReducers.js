@@ -1,7 +1,4 @@
-const defaultData = [];
-const updateUserDefault = {};
-
-export const mainData = (state = defaultData, action) => {
+export const mainData = (state = [], action) => {
     //lấy id tự động
     const randomId = maxNumber => {
         let getRandomId = number => {
@@ -34,14 +31,22 @@ export const mainData = (state = defaultData, action) => {
         case "SUA_SV": {
             const updateID = action.payload.masv;
             const find = state.findIndex(item => item.masv === updateID);
-            state[find] = action.payload;
-            return [...state];
+            const nextState = [...state];
+            for (let key in action.payload) {
+                if(action.payload[key] !== nextState[find][key]) {
+                    nextState[find] = {
+                        ...nextState[find],
+                        [key]: action.payload[key]
+                    }
+                }
+            }
+            return nextState;
         }
         default: return state;
     }
 }
 
-export const updateUser = (state = updateUserDefault, action) => {
+export const updateUser = (state = [], action) => {
     switch(action.type) {
         case "SV_DANG_SUA": {
             state = action.payload;
