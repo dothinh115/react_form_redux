@@ -30,9 +30,9 @@ constructor(props) {
     ];
 
     keychangeHandle = e => {
-        let {formConfig} = this.props;
-        let id = e.target.getAttribute("data-id");
-        let value = e.target.value;
+        const {formConfig} = this.props;
+        const id = e.target.getAttribute("data-id");
+        const value = e.target.value;
 
         let newValue = this.state.value;
         let newError = this.state.errors;
@@ -67,7 +67,7 @@ constructor(props) {
     }
 
     checkValid = () => {
-        let {value, errors} = this.state;
+        const {value, errors} = this.state;
         for (let key in value) {
             if(value[key] === "" || errors[key] !== ""){
                 return false; 
@@ -110,7 +110,7 @@ constructor(props) {
         
     }
 
-    okHandle = () => {
+    confirmHandle = () => {
         if(this.checkValid()) {
             const data = {...this.state.value};
             const action_2 = {
@@ -127,31 +127,29 @@ constructor(props) {
     }
 
     showButton = () => {
-        let {item, updateUser} = this.props;
+        const {item, updateUser} = this.props;
         if(updateUser.masv === item.masv) {
             return <><button className="btn btn-light" onClick={e => {
                 this.cancelHandle();
             }}>
                 Hủy
             </button>
-            <button className="btn btn-primary mx-2" onClick={this.okHandle} disabled={!this.checkValid()}>
+            <button className="btn btn-primary mx-2" onClick={this.confirmHandle} disabled={!this.checkValid()}>
                 OK
             </button></>
         }
-        else {
-            return <><button className="btn btn-danger" onClick={e => {
-                this.deleteHandle();
-            }}>
-                Xóa
-            </button>
-            <button className="btn btn-success mx-2" onClick={this.editHandle}>
-                Sửa
-            </button></>
-        }
+        return <><button className="btn btn-danger" onClick={e => {
+            this.deleteHandle();
+        }}>
+            Xóa
+        </button>
+        <button className="btn btn-success mx-2" onClick={this.editHandle}>
+            Sửa
+        </button></>
     }
 
     showInfo = (id, value) => {
-        let {item, updateUser} = this.props;
+        const {item, updateUser} = this.props;
         if(item.masv === updateUser.masv && id !== "masv") {
             return <input 
             type="text" 
@@ -166,7 +164,7 @@ constructor(props) {
 
     enterHandle = e => {
         if(e.key === "Enter") {
-            this.okHandle();
+            this.confirmHandle();
         }
     }
 

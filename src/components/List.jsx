@@ -34,6 +34,9 @@ export class List extends Component {
         }
         else {
             mainData = data;
+            if(mainData.length === 0) {
+                return <tr><td colSpan={5}>Chưa có ai ở đây.</td></tr>;
+            }
         }
         return (mainData.map((item, index) => {
             return <Item key={index} item={item} />

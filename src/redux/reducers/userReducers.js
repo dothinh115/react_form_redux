@@ -11,7 +11,7 @@ export const mainData = (state = defaultData, action) => {
         //lấy số random
         let id = getRandomId(maxNumber);
         //tìm xem trong mảng có trùng hay ko, nếu trùng thì tiếp tục gọi hàm lấy số random
-        while (state.find(item => item.masv === id) !== undefined || id.length <= 9) {
+        while (state.find(item => item.masv === id) !== undefined) {
             id = getRandomId(maxNumber);
         }
         return id;
