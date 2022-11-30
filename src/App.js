@@ -12,7 +12,6 @@ function App() {
         <Route path="/" element={<Main />}>
           <Route index element={<List />} />
           <Route path="/edit/:userID" element={<List />} />
-          <Route path="/search/:keyWords" element={<List />} />
           <Route path='*' element={<Navigate to="/" />} />
         </Route>
       </Routes>

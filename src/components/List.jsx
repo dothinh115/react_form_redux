@@ -25,8 +25,8 @@ class List extends Component {
                 newArr = [...newArr, item.masv];
             }
             if(!newArr.includes(Number(userID))){
-            navigate("/");
-        }
+                navigate("/");
+            }
         }
     }
 
