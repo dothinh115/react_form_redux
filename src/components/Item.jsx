@@ -7,13 +7,14 @@ import withRouter from "../router/withRouter"
 class Item extends Component {
 constructor(props) {
     super(props)
+    const editingUser = {...this.props.item};
 
     this.state = {
         value: {
-            masv: "",
-            hoten: "",
-            sdt: "",
-            email: ""
+            masv: editingUser.masv,
+            hoten: editingUser.hoten,
+            sdt: editingUser.sdt,
+            email: editingUser.email
         },
         errors: {
             masv: "",
@@ -85,13 +86,6 @@ constructor(props) {
         this.props.dispatch(action);
     }
 
-    editHandle = () => {
-        const editingUser = {...this.props.item};
-        this.setState({
-            value: editingUser
-        });
-    }
-
     cancelHandle = () => {
         const editingUser = {...this.props.item};
         this.setState({
@@ -101,7 +95,7 @@ constructor(props) {
     }
 
     confirmHandle = () => {
-        if(this.checkValid() && this.anyChange()) {
+        if(this.checkValid()) {
             const data = {...this.state.value};
             const action = updateAction(data);
             this.props.dispatch(action);
@@ -117,7 +111,7 @@ constructor(props) {
             }}>
                 Hủy
             </button>
-            <button className="btn btn-primary mx-2" onClick={this.confirmHandle} disabled={this.checkValid() && this.anyChange() ? false : true}>
+            <button className="btn btn-primary mx-2" onClick={this.confirmHandle} disabled={this.checkValid() ? false : true}>
                 OK
             </button></>
         }
@@ -126,7 +120,7 @@ constructor(props) {
         }}>
             Xóa
         </button>
-        <Link to={`/edit/${item.masv}`} className="btn btn-success mx-2" onClick={this.editHandle}>Sửa</Link></>
+        <Link to={`/edit/${item.masv}`} className="btn btn-success mx-2">Sửa</Link></>
     }
 
     showInfo = (id, value) => {
@@ -150,17 +144,6 @@ constructor(props) {
         else if(e.key === "Esc") {
             this.cancelHandle();
         }
-    }
-
-    anyChange = () => {
-        const {item} = this.props;
-        const {value} = this.state;
-        for (let key in item) {
-            if(item[key] !== value[key]) {
-                return true; //true === co thay doi === pass
-            }
-        }
-        return false;
     }
 
     render() {
