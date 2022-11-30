@@ -4,6 +4,32 @@ import Item from './Item'
 import customFunc from '../customFunction/myCustom'
 
 class List extends Component {
+    componentDidMount() {
+        const {userID} = this.props.params;
+        const {data, navigate} = this.props;
+        let newArr = [];
+        for (let item of data) {
+            newArr = [...newArr, item.masv];
+        }
+        if(!newArr.includes(Number(userID))){
+            navigate("/");
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.params.userID !== this.props.params.userID) {
+            const {userID} = this.props.params;
+            const {data, navigate} = this.props;
+            let newArr = [];
+            for (let item of data) {
+                newArr = [...newArr, item.masv];
+            }
+            if(!newArr.includes(Number(userID))){
+                navigate("/");
+            }
+        }
+    }
+
     searchResult = () => {
         const {data, search} = this.props;
         let searchRes = [];
