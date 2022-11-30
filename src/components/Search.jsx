@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { searchAction } from '../redux/actions/userActions';
+import withRouter from '../router/withRouter';
 
 export class Search extends Component {
     inputChangeHandle = e => {
+        const {params, navigate} = this.props;
+        if(params) {
+            navigate("/");
+        }
         let {value} = e.target;
         value = value.trim().toLowerCase();
         const action = searchAction(value);
@@ -24,4 +29,4 @@ export class Search extends Component {
 const mapStateToProps = (state) => ({})
 
 
-export default connect(mapStateToProps)(Search)
+export default connect(mapStateToProps)(withRouter(Search))
