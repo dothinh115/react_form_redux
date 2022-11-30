@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
+import { deleteAction, updateAction } from '../redux/actions/userActions';
+import withRouter from "../router/withRouter"
 
-export class Item extends Component {
+class Item extends Component {
 constructor(props) {
     super(props)
 
@@ -78,20 +81,12 @@ constructor(props) {
 
     deleteHandle = () => {
         const {masv} = this.props.item;
-        const action = {
-            type: "XOA_SV",
-            payload: masv
-        }
+        const action = deleteAction(masv);
         this.props.dispatch(action);
     }
 
     editHandle = () => {
         const editingUser = {...this.props.item};
-        const action = {
-            type: "SV_DANG_SUA",
-            payload: editingUser
-        };
-        this.props.dispatch(action);
         this.setState({
             value: editingUser
         });
@@ -102,33 +97,21 @@ constructor(props) {
         this.setState({
             value: editingUser
         });
-        const action = {
-            type: "SV_DANG_SUA",
-            payload: {}
-        };
-        this.props.dispatch(action);
-        
+        this.props.navigate("/");
     }
 
     confirmHandle = () => {
-        if(this.checkValid()) {
+        if(this.checkValid() && this.anyChange()) {
             const data = {...this.state.value};
-            const action_2 = {
-                type: "SV_DANG_SUA",
-                payload: {}
-            }
-            this.props.dispatch(action_2);
-            const action = {
-                type: "SUA_SV",
-                payload: data
-            };
+            const action = updateAction(data);
             this.props.dispatch(action);
+            this.props.navigate("/");
         }
     }
 
     showButton = () => {
-        const {item, updateUser} = this.props;
-        if(updateUser.masv === item.masv) {
+        const {item, params} = this.props;
+        if(item.masv == params.userID) {
             return <><button className="btn btn-light" onClick={e => {
                 this.cancelHandle();
             }}>
@@ -143,14 +126,12 @@ constructor(props) {
         }}>
             Xóa
         </button>
-        <button className="btn btn-success mx-2" onClick={this.editHandle}>
-            Sửa
-        </button></>
+        <Link to={`/edit/${item.masv}`} className="btn btn-success mx-2" onClick={this.editHandle}>Sửa</Link></>
     }
 
     showInfo = (id, value) => {
-        const {item, updateUser} = this.props;
-        if(item.masv === updateUser.masv && id !== "masv") {
+        const {item, params} = this.props;
+        if(item.masv == params.userID && id !== "masv") {
             return <input 
             type="text" 
             className={`form-control ${this.state.errors[id] ? "is-invalid" : undefined}`} 
@@ -176,7 +157,7 @@ constructor(props) {
         const {value} = this.state;
         for (let key in item) {
             if(item[key] !== value[key]) {
-                return true; //true === co thay doi
+                return true; //true === co thay doi === pass
             }
         }
         return false;
@@ -202,8 +183,7 @@ constructor(props) {
 }
 
 const mapStateToProps = (state) => ({
-    updateUser: state.updateUser,
     formConfig: state.formConfig
 });
 
-export default connect(mapStateToProps)(Item)
+export default connect(mapStateToProps)(withRouter(Item));

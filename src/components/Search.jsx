@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { searchAction } from '../redux/actions/userActions';
 
 export class Search extends Component {
     inputChangeHandle = e => {
         let {value} = e.target;
         value = value.trim().toLowerCase();
-        const action = {
-            type: "TIM_KIEM_USER",
-            payload: value
-        }
+        const action = searchAction(value);
         this.props.dispatch(action);
     }
     render() {

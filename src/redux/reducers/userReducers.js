@@ -33,22 +33,14 @@ export const mainData = (state = [], action) => {
             const find = state.findIndex(item => item.masv === updateID);
             const nextState = [...state];
             for (let key in action.payload) {
-                nextState[find] = {
-                    ...nextState[find],
-                    [key]: action.payload[key]
+                if(nextState[find][key] !== action.payload[key]) {
+                    nextState[find] = {
+                        ...nextState[find],
+                        [key]: action.payload[key]
+                    }
                 }
             }
             return nextState;
-        }
-        default: return state;
-    }
-}
-
-export const updateUser = (state = [], action) => {
-    switch(action.type) {
-        case "SV_DANG_SUA": {
-            state = action.payload;
-            return {...state}
         }
         default: return state;
     }

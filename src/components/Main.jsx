@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Outlet } from 'react-router-dom'
 import Form from './Form'
-import List from './List'
 import Search from './Search'
 
 class Main extends Component {
@@ -36,7 +36,7 @@ class Main extends Component {
             <div className='container mt-5'>
                 <Form />
                 <Search />
-                <List />
+                <Outlet />
             </div>
         )
     }

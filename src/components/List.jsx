@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Item from './Item'
 
-export class List extends Component {
+class List extends Component {
     searchResult = () => {
         const {data, search} = this.props;
         let searchRes = [];
@@ -81,5 +81,5 @@ const mapStateToProps = (state) => ({
     search: state.search
 });
 
-
 export default connect(mapStateToProps)(List)
+

@@ -1,12 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit'; 
 import {formConfig} from './reducers/formConfig';
-import { mainData, updateUser } from './reducers/userReducers';
+import { mainData } from './reducers/userReducers';
 
 const store = configureStore({
     reducer: {
         data: mainData,
         formConfig: formConfig,
-        updateUser: updateUser,
         search: (state = "", action) => {
             switch(action.type) {
                 case "TIM_KIEM_USER": {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { addNewUserAction } from '../redux/actions/userActions';
 
 
 export class Form extends Component {
@@ -84,10 +85,7 @@ export class Form extends Component {
     submitHandle = e => {
         e.preventDefault();
         if(this.checkValid()) {
-            const action = {
-                type: "THEM_SV_MOI",
-                payload: this.state.value
-            }
+            const action = addNewUserAction(this.state.value);
             this.props.dispatch(action);
         }
     }
