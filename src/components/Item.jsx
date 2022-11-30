@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { deleteAction, updateAction } from '../redux/actions/userActions';
 import customFunc from '../customFunction/myCustom';
+import { compose } from '@reduxjs/toolkit';
 
 class Item extends Component {
     constructor(props) {
@@ -97,14 +98,6 @@ class Item extends Component {
         this.props.dispatch(action);
     }
 
-    cancelHandle = () => {
-        const editingUser = {...this.props.item};
-        this.setState({
-            value: editingUser
-        });
-        this.props.navigate("/");
-    }
-
     confirmHandle = () => {
         if(this.checkValid()) {
             const data = {...this.state.value};
@@ -117,11 +110,7 @@ class Item extends Component {
     showButton = () => {
         const {item, edittingUser} = this.props;
         if(item.masv == edittingUser) {
-            return <><button className="btn btn-light" onClick={e => {
-                this.cancelHandle();
-            }}>
-                Hủy
-            </button>
+            return <><Link to="/" className="btn btn-light">Hủy</Link>
             <button className="btn btn-primary mx-2" onClick={this.confirmHandle} disabled={this.checkValid() ? false : true}>
                 OK
             </button></>
@@ -180,4 +169,7 @@ const mapStateToProps = (state) => ({
     formConfig: state.formConfig
 });
 
-export default connect(mapStateToProps)(customFunc(Item));
+export default compose(
+    customFunc,
+    connect(mapStateToProps)
+)(Item);

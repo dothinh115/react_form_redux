@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { addNewUserAction } from '../redux/actions/userActions';
 
-
 export class Form extends Component {
     constructor(props) {
       super(props)
