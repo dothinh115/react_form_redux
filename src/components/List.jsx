@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Item from './Item'
+import customFunc from '../customFunction/myCustom'
 
 class List extends Component {
     searchResult = () => {
@@ -20,7 +21,7 @@ class List extends Component {
     }
 
     showItems = () => {
-        const {data, search} = this.props;
+        const {data, search, params} = this.props;
         let searchRes = [];
         let mainData = [];
         if(search !== "") {
@@ -39,7 +40,7 @@ class List extends Component {
             }
         }
         return (mainData.map((item, index) => {
-            return <Item key={index} item={item} />
+            return <Item key={index} item={item} edittingUser={Number(params.userID)} />
         }));
     }
 
@@ -81,5 +82,5 @@ const mapStateToProps = (state) => ({
     search: state.search
 });
 
-export default connect(mapStateToProps)(List)
+export default connect(mapStateToProps)(customFunc(List))
 

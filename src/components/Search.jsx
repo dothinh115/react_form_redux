@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { searchAction } from '../redux/actions/userActions';
-import withRouter from '../router/withRouter';
+import withRouter from '../customFunction/myCustom';
 
 export class Search extends Component {
     inputChangeHandle = e => {
         const {params, navigate} = this.props;
-        if(params) {
+        if(params.userID) {
             navigate("/");
         }
         let {value} = e.target;

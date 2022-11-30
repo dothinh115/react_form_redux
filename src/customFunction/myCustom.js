@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
  
-const withRouter = WrappedComponent => props => {
+const customFunc = WrappedComponent => props => {
   const params = useParams();
   const navigate = useNavigate();
  
@@ -14,4 +14,4 @@ const withRouter = WrappedComponent => props => {
   );
 };
  
-export default withRouter;
+export default customFunc;

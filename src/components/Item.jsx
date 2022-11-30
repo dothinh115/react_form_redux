@@ -2,29 +2,40 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { deleteAction, updateAction } from '../redux/actions/userActions';
-import withRouter from "../router/withRouter"
+import customFunc from '../customFunction/myCustom';
 
 class Item extends Component {
-constructor(props) {
-    super(props)
-    const editingUser = {...this.props.item};
-
-    this.state = {
-        value: {
-            masv: editingUser.masv,
-            hoten: editingUser.hoten,
-            sdt: editingUser.sdt,
-            email: editingUser.email
-        },
-        errors: {
-            masv: "",
-            hoten: "",
-            sdt: "",
-            email: ""
-        },
-        valid: false
+    constructor(props) {
+        super(props)
+        this.state = {
+            value: {
+                masv: "",
+                hoten: "",
+                sdt: "",
+                email: ""
+            },
+            errors: {
+                masv: "",
+                hoten: "",
+                sdt: "",
+                email: ""
+            },
+            valid: false
+        }
     }
-}
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.edittingUser !== this.props.edittingUser) {
+            const {edittingUser} = this.props;
+            const {item} = this.props;
+            if(edittingUser == item.masv) {
+                this.setState({
+                    value: {...item},
+                    valid: this.checkValid()
+                })
+            }
+        }
+    }
 
     reg = [
         /^[0-9]+$/, 
@@ -104,8 +115,8 @@ constructor(props) {
     }
 
     showButton = () => {
-        const {item, params} = this.props;
-        if(item.masv == params.userID) {
+        const {item, edittingUser} = this.props;
+        if(item.masv == edittingUser) {
             return <><button className="btn btn-light" onClick={e => {
                 this.cancelHandle();
             }}>
@@ -124,8 +135,8 @@ constructor(props) {
     }
 
     showInfo = (id, value) => {
-        const {item, params} = this.props;
-        if(item.masv == params.userID && id !== "masv") {
+        const {item, edittingUser} = this.props;
+        if(item.masv == edittingUser && id !== "masv") {
             return <input 
             type="text" 
             className={`form-control ${this.state.errors[id] ? "is-invalid" : undefined}`} 
@@ -169,4 +180,4 @@ const mapStateToProps = (state) => ({
     formConfig: state.formConfig
 });
 
-export default connect(mapStateToProps)(withRouter(Item));
+export default connect(mapStateToProps)(customFunc(Item));
